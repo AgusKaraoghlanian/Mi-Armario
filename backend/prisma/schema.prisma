@@ -1,0 +1,117 @@
+// Modelos de la base. Es la única fuente de verdad de las tablas: los tipos de la app
+// (app/src/dominio/tipos.ts) tienen que coincidir con esto.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// Dónde va la prenda en el maniquí (y en qué orden se dibuja).
+enum Zona {
+  PIERNAS
+  PIES
+  TORSO
+  ABRIGO
+  CABEZA
+  ACCESORIO
+}
+
+enum Categoria {
+  REMERA
+  CAMISA
+  BUZO
+  CAMPERA
+  PANTALON
+  SHORT
+  POLLERA
+  VESTIDO
+  CALZADO
+  GORRO
+  ACCESORIO
+}
+
+enum Temporada {
+  VERANO
+  INVIERNO
+  MEDIA
+  TODAS
+}
+
+model Usuario {
+  id            String        @id @default(uuid())
+  email         String        @unique
+  password      String
+  nombre        String
+  creadoEn      DateTime      @default(now())
+  prendas       Prenda[]
+  outfits       Outfit[]
+  inspiraciones Inspiracion[]
+}
+
+model Prenda {
+  id         String         @id @default(uuid())
+  usuarioId  String
+  usuario    Usuario        @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  nombre     String
+  categoria  Categoria
+  zona       Zona
+  // Ruta en Supabase Storage de la foto sin fondo (PNG con transparencia).
+  fotoRuta   String?
+  colores    String[]
+  temporada  Temporada      @default(TODAS)
+  // 1 = muy informal, 5 = muy formal.
+  formalidad Int            @default(2)
+  creadaEn   DateTime       @default(now())
+  outfits    OutfitPrenda[]
+
+  @@index([usuarioId, zona])
+}
+
+model Outfit {
+  id        String         @id @default(uuid())
+  usuarioId String
+  usuario   Usuario        @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  nombre    String
+  favorito  Boolean        @default(false)
+  creadoEn  DateTime       @default(now())
+  prendas   OutfitPrenda[]
+  usos      RegistroUso[]
+
+  @@index([usuarioId])
+}
+
+// Tabla intermedia: qué prendas tiene cada outfit y en qué orden se pusieron.
+model OutfitPrenda {
+  outfitId String
+  outfit   Outfit @relation(fields: [outfitId], references: [id], onDelete: Cascade)
+  prendaId String
+  prenda   Prenda @relation(fields: [prendaId], references: [id], onDelete: Cascade)
+  orden    Int
+
+  @@id([outfitId, prendaId])
+}
+
+model Inspiracion {
+  id         String   @id @default(uuid())
+  usuarioId  String
+  usuario    Usuario  @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  imagenRuta String
+  linkOrigen String?
+  tags       String[]
+  creadaEn   DateTime @default(now())
+
+  @@index([usuarioId])
+}
+
+// Cada vez que el usuario marca "lo usé hoy".
+model RegistroUso {
+  id       String   @id @default(uuid())
+  outfitId String
+  outfit   Outfit   @relation(fields: [outfitId], references: [id], onDelete: Cascade)
+  fecha    DateTime @default(now())
+
+  @@index([outfitId, fecha])
+}
