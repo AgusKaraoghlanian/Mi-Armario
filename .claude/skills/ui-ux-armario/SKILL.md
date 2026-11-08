@@ -16,7 +16,7 @@ grandes de look.
 2. **Todo lo tocable responde.** Usar `Presionable` (se achica con un resorte), no `Pressable`
    pelado.
 3. **Movimiento con sentido.** Entradas escalonadas en listas, transiciones de color en lo que
-   cambia de estado, y capas del maniquí que entran con resorte. Nada que dure más de ~400 ms
+   cambia de estado, y prendas que siguen al dedo y entran con resorte. Nada que dure más de ~400 ms
    ni que trabe un toque.
 4. **Nativo donde se note.** Tabs nativas, hojas (`formSheet`) para crear cosas, gestos del
    sistema. En web, una versión equivalente.

@@ -18,16 +18,19 @@ No asumas que algo existe: revisá los archivos.
 
 ## Qué es Mi Armario
 
-- **Armario**: prendas y accesorios con foto sin fondo, categoría, zona del maniquí, colores,
+- **Armario**: prendas y accesorios con foto sin fondo, categoría, fila del probador, colores,
   temporada y formalidad.
-- **Probador**: un maniquí 2D donde cada prenda es una capa. Poner o sacar es instantáneo
-  porque no se genera ninguna imagen. Las reglas viven en `app/src/dominio/probador.ts`.
+- **Probador**: las prendas apiladas en filas (gorra, abrigo, arriba, abajo, calzado), como un
+  outfit armado sobre la cama. Cada fila se cambia deslizando, y "mezclar" arma uno al azar
+  que combine. Es instantáneo porque no se genera ninguna imagen. Las reglas viven en `app/src/dominio/probador.ts`.
 - **Outfits**: combinaciones guardadas, favoritos y "lo usé hoy".
 - **Inspiración**: fotos de referencia vinculadas a prendas parecidas.
 - **Comparar**: dos outfits lado a lado.
 - **Consejos**: primero por reglas (color, formalidad, clima, prendas sin usar); más adelante con IA.
-- **Fase 2**: probador con la foto del usuario (virtual try-on con IA), generando una sola
-  imagen cuando el outfit ya está armado, nunca en cada toque.
+- **IA, primera función**: subir la foto de un look y armarlo con las prendas más parecidas
+  del armario.
+- **IA, al final**: "verme puesto" (virtual try-on), generando una sola imagen sobre un outfit
+  ya armado, nunca en cada toque.
 
 ## Diseño
 

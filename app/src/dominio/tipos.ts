@@ -1,7 +1,6 @@
 // Tipos del dominio. Son los mismos datos que guarda el backend (backend/prisma/schema.prisma).
 
-// Dónde va cada prenda en el maniquí. El orden importa: es el orden de las capas
-// (lo que está más abajo en la lista se dibuja arriba de lo anterior).
+// En qué fila del probador va cada prenda (las filas y su orden están en dominio/probador.ts).
 export const ZONAS = ['piernas', 'pies', 'torso', 'abrigo', 'cabeza', 'accesorio'] as const;
 export type Zona = (typeof ZONAS)[number];
 
@@ -27,7 +26,7 @@ export type Prenda = {
   nombre: string;
   categoria: Categoria;
   zona: Zona;
-  // Foto sin fondo (PNG con transparencia): es la capa que se dibuja en el maniquí.
+  // Foto sin fondo (PNG con transparencia): es lo que se ve en el probador.
   fotoUri: string | null;
   colores: string[];
   temporada: Temporada;

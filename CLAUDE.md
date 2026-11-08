@@ -1,7 +1,7 @@
 # Mi Armario
 
-App para tener el armario en el celu: cargar prendas y accesorios, armar outfits en un maniquí
-con capas, guardar inspiración, comparar looks y recibir consejos. Mobile-first (iOS y Android
+App para tener el armario en el celu: cargar prendas y accesorios, armar outfits con las prendas
+apiladas (cada una se cambia deslizando), guardar inspiración, comparar looks y recibir consejos. Mobile-first (iOS y Android
 con Expo), con versión web de regalo.
 
 Mapa del repo, cómo levantarlo y decisiones tomadas: **`ESTRUCTURA.md`** (leerlo antes de tocar

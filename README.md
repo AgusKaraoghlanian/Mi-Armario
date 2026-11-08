@@ -1,6 +1,6 @@
 # Mi Armario
 
-Tu armario en el celu: cargá tu ropa, armá outfits en un maniquí, guardá inspiración y recibí
+Tu armario en el celu: cargá tu ropa, armá outfits deslizando tus prendas, guardá inspiración y recibí
 consejos.
 
 - `app/`: la app (Expo, iOS, Android y web)
