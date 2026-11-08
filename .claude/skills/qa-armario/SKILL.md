@@ -23,8 +23,9 @@ cd backend && npm test
 
 ## 3. Casos borde de Mi Armario
 
-- **Probador**: zona simple (se reemplaza la prenda), accesorios (se suman hasta el máximo),
-  poner dos veces la misma prenda, sacar la última y el orden de las capas.
+- **Probador**: deslizar al final de una fila (da la vuelta), filas opcionales que pasan por
+  "nada", filas sin prendas, "mezclar" con un armario chico o sin prendas que combinen, y el
+  máximo de accesorios.
 - **Prendas sin foto o con la foto rota**: ¿qué se ve?
 - **Borrar una prenda que está en outfits**: ¿qué pasa con esos outfits?
 - **Armario grande** (200 prendas o más): ¿la grilla usa una lista virtualizada? ¿Las animaciones

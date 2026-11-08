@@ -24,8 +24,11 @@ Mapa rápido de dónde está cada cosa. Se actualiza con cada cambio grande.
   Reanimated. La versión web sale del mismo código.
 - **TypeScript en la app**: es lo que trae Expo por defecto y ayuda con las props de los
   componentes y las rutas tipadas. El backend sigue en JavaScript, como VPUG.
-- **Maniquí con capas 2D** en la v1: poner o sacar una prenda es instantáneo y no cuesta nada.
-  El probador con la foto del usuario (IA) queda para la fase 2.
+- **Probador con prendas apiladas** (8 de noviembre de 2026; reemplazó al maniquí 2D): una
+  prenda recortada sobre una silueta genérica nunca calza bien. Por eso las prendas se muestran
+  en filas, como un outfit sobre la cama, y cada fila se cambia deslizando. Las funciones con
+  IA, en orden: armar un look a partir de una foto con prendas parecidas del armario, y al
+  final "verme puesto" (una sola imagen sobre un outfit ya armado).
 - **Datos locales primero** (próximo paso): el armario se guarda en el celu y anda sin internet.
   El backend entra cuando haga falta cuenta, backup o sincronizar entre dispositivos.
 - **Diseño propio**: oscuro por defecto con acento violeta y todo animado. No se parece a VPUG.
@@ -40,15 +43,16 @@ src/app/                      rutas: cada archivo es una pantalla
   (tabs)/_layout.tsx          tabs nativas de iOS y Android (Armario, Probador, Outfits, Inspiración)
   (tabs)/_layout.web.tsx      las mismas tabs en web, como barra flotante
   (tabs)/index.tsx            Armario: filtros y estado vacío (todavía no guarda prendas)
-  (tabs)/probador.tsx         Probador: maniquí + prendas de ejemplo para tocar
+  (tabs)/probador.tsx         Probador: filas deslizables, "Mezclar" y accesorios (con prendas de ejemplo)
   (tabs)/outfits.tsx          Outfits (vacío)
   (tabs)/inspiracion.tsx      Inspiración (vacío)
   agregar-prenda.tsx          hoja que sube desde abajo: cámara o galería (todavía sin conectar)
 src/dominio/                  reglas sin React, con tests
-  tipos.ts                    Prenda, Outfit, zonas del maniquí y categorías
-  probador.ts                 poner, sacar y alternar prendas, y el orden de las capas
+  tipos.ts                    Prenda, Outfit, zonas y categorías
+  probador.ts                 filas, moverEnFila (carrusel), combinan, mezclar y accesorios
 src/features/probador/
-  componentes/maniqui.tsx     silueta + capas animadas por zona
+  componentes/fila-deslizable.tsx  una fila: la prenda sigue al dedo, cambia al soltar y entra con resorte
+  componentes/tarjeta-prenda.tsx   la prenda (foto, o tarjeta de color mientras no haya fotos) y el tamaño de cada fila
   prendas-de-ejemplo.ts       TEMPORAL: se borra cuando el probador lea el armario real
 src/compartidos/componentes/  Pantalla, Texto, Presionable (rebote al tocar), Chip, EstadoVacio
 src/tema/tema.ts              colores (oscuro/claro), espacios, radios, tipografía y resortes
@@ -61,7 +65,7 @@ AGENTS.md                     reglas de Expo para la IA (leer la doc de la versi
 Igual que VPUG: `router → middlewares → controller → service → repository → Prisma`.
 
 ```
-prisma/schema.prisma          Usuario, Prenda, Outfit, OutfitPrenda (orden de capas), Inspiracion, RegistroUso
+prisma/schema.prisma          Usuario, Prenda, Outfit, OutfitPrenda (prendas de cada outfit), Inspiracion, RegistroUso
 prisma7.config.ts             config de Prisma 7 (migraciones por DIRECT_URL)
 src/app.js                    Express: helmet, CORS, JSON, /salud, límite por IP, 404 y errores
 src/server.js                 valida el entorno y arranca
@@ -85,5 +89,5 @@ tests/                        vitest + supertest, sin base
 
 1. Agregar prenda: cámara o galería, quitar el fondo y cargar los datos.
 2. Guardar el armario en el celu y mostrarlo en la grilla con filtros.
-3. Que el probador use las prendas reales (fotos como capas) y guardar outfits.
+3. Que el probador use las prendas reales y guardar outfits.
 4. Inspiración, comparar y consejos por reglas.

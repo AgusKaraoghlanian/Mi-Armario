@@ -9,7 +9,7 @@ datasource db {
   provider = "postgresql"
 }
 
-// Dónde va la prenda en el maniquí (y en qué orden se dibuja).
+// En qué fila del probador va la prenda.
 enum Zona {
   PIERNAS
   PIES
@@ -83,7 +83,7 @@ model Outfit {
   @@index([usuarioId])
 }
 
-// Tabla intermedia: qué prendas tiene cada outfit y en qué orden se pusieron.
+// Tabla intermedia: qué prendas tiene cada outfit.
 model OutfitPrenda {
   outfitId String
   outfit   Outfit @relation(fields: [outfitId], references: [id], onDelete: Cascade)
